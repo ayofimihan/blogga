@@ -1,27 +1,31 @@
 import Hero from "../components/home-page/Hero";
 import FeaturedPosts from "../components/home-page/featured-posts";
-import useSWR from "swr";
-import { useEffect, useState } from "react";
+import { getFeaturedPosts } from "@/helpers/mongo-utils";
 
-export default function Home() {
-  const [featuredPosts, setFeaturedPosts] = useState([]);
-  const fetcher = (...args) => fetch(...args).then((res) => res.json());
-  const { data } = useSWR("/api/posts/featured", fetcher, {
-    revalidateOnFocus: false,
-    revalidateIfStale: false,
-    retryInterval: 100000,
-  });
-
-  useEffect(() => {
-    if (data) {
-      setFeaturedPosts(featuredPosts);
-    }
-  }, [data]);
-
+export default function Home(props) {
   return (
     <>
       <Hero />
-      <FeaturedPosts posts={featuredPosts} />
+      <FeaturedPosts posts={props.data} />
     </>
   );
+}
+
+export async function getStaticProps() {
+  const posts = (await getFeaturedPosts()) || [];
+  const data = posts.map((post) => ({
+    // Extract only the necessary serializable properties from each post
+    title: post.title,
+    image: post.image,
+    slug: post.slug,
+    date: post.date.toISOString(), // Convert the Date object to a serializable string
+  }));
+  console.log(data);
+
+  return {
+    props: {
+      data,
+    },
+    revalidate: 100000,
+  };
 }

@@ -4,10 +4,11 @@
   margin: var(--size-8) auto;
 }
 
-.latest h2 {
+.latest h4 {
   font-size: var(--size-8);
   color: var(--color-grey-800);
   text-align: center;
+  margin-bottom: 40px;
 }
 
 @media (min-width: 768px) {

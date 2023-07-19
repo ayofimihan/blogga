@@ -2,6 +2,7 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   background-color: var(--color-grey-800);
   text-align: center;
+  border-radius: 20px;
 }
 
 .post a {
@@ -16,6 +17,7 @@
 
 .image img {
   object-fit: cover;
+  border-radius: 20px;
 }
 
 .content {

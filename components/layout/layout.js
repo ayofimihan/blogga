@@ -1,10 +1,14 @@
 import MainNavigation from "./main-navigation";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const Layout = (props) => {
   return (
     <>
-      <MainNavigation />
-      {props.children}
+      <ClerkProvider>
+        {" "}
+        <MainNavigation />
+        {props.children}
+      </ClerkProvider>
     </>
   );
 };

@@ -10,7 +10,6 @@ const PostItem = (props) => {
     year: "numeric",
   });
 
-  const imagePath = `/posts/${slug}/${image}`;
   const linkPath = `/posts/${slug}`;
 
   return (
@@ -18,7 +17,7 @@ const PostItem = (props) => {
       <Link href={linkPath}>
         <div className={styles.image}>
           <Image
-            src={imagePath}
+            src={image}
             alt={title}
             width={"300"}
             height={"200"}

@@ -2,29 +2,19 @@ import PostHeader from "./post-header";
 import styles from "./post-content.module.css";
 import ReactMarkdown from "react-markdown";
 import useSWR from "swr";
-import { useEffect, useState } from "react";
 
 const PostContent = (props) => {
-  const [post, setPost] = useState(null);
-
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
-  const { data } = useSWR("/api/posts", fetcher);
-  const imagePath = post ? `/posts/${post.slug}/${post.image}` : "";
+  const { data } = useSWR(`/api/posts?slug=${props.slug}`, fetcher);
 
-  useEffect(() => {
-    if (data) {
-      setPost(data[0]);
-    }
-  }, [data]);
-
-  if (!post) {
+  if (!data) {
     return <div>Loading...</div>;
   }
 
   return (
     <article className={styles.content}>
-      <PostHeader title={post.title} image={imagePath} />
-      <ReactMarkdown>{post.content}</ReactMarkdown>
+      <PostHeader title={data.title} image={data.image} />
+      <ReactMarkdown>{data.content}</ReactMarkdown>
     </article>
   );
 };

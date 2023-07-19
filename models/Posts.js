@@ -30,9 +30,13 @@ try {
       type: Date,
       required: true,
     },
+    isFeatured: {
+      type: Boolean,
+      required: true,
+    },
   });
 
-  Comment = mongoose.model("Post", postSchema);
+  Post = mongoose.model("Post", postSchema);
 }
 
 export default Post;
